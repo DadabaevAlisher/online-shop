@@ -18,7 +18,20 @@
         <h2 class="text-danger my-3">{{ product.price }} so'm</h2>
         <p class="lead">{{ product.description }}</p>
         
-        <button class="btn btn-success btn-lg mt-3">Savatga qo'shish</button>
+        {% comment %} <button class="btn btn-success btn-lg mt-3">Savatga qo'shish</button> {% endcomment %}
+
+    <form action="{% url 'cart:cart_add' product.id %}" method="post" class="mt-4">
+        {% csrf_token %}
+        <div class="row align-items-center">
+            <div class="col-auto">
+                {{ cart_product_form.quantity.label_tag }}
+                {{ cart_product_form.quantity }}
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-success btn-lg mt-3">Savatga qo'shish</button>
+            </div>
+        </div>
+    </form>
     </div>
 </div>
 {% endblock %}
