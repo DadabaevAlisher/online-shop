@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}Mahsulotlar Katalogi{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <h3>Kategoriyalar</h3>
+        <div class="list-group">
+            <a href="{% url 'products:product_list' %}" class="list-group-item list-group-item-action {% if not category %}active{% endif %}">Hamma mahsulotlar</a>
+            {% for c in categories %}
+                <a href="{% url 'products:product_list_by_category' c.slug %}" class="list-group-item list-group-item-action {% if category.slug == c.slug %}active{% endif %}">
+                    {{ c.name }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <h2>{% if category %}{{ category.name }}{% else %}Barcha Mahsulotlar{% endif %}</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for product in products %}
+                <div class="col">
+                    <div class="card h-100">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                            <div class="bg-secondary text-white text-center py-5" style="height: 200px;">Rasm yo'q</div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text text-danger fw-bold">{{ product.price }} so'm</p>
+                            <a href="{% url 'products:product_detail' product.id product.slug %}" class="btn btn-primary w-100">Batafsil</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
