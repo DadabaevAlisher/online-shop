@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Buyurtmani rasmiylashtirish{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card p-4 shadow-sm">
+            <h3>Yetkazib berish ma'lumotlari</h3>
+            <hr>
+            <form method="post" class="mt-3">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success btn-lg w-100 mt-3">Buyurtmani tasdiqlash</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card p-4 bg-light shadow-sm">
+            <h3>Sizning buyurtmangiz</h3>
+            <hr>
+            <ul class="list-group mb-3">
+                {% for item in cart %}
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h6 class="my-0">{{ item.product.name }}</h6>
+                            <small class="text-muted">Soni: {{ item.quantity }} ta</small>
+                        </div>
+                        <span class="text-muted">{{ item.total_price }} so'm</span>
+                    </li>
+                {% endfor %}
+                <li class="list-group-item d-flex justify-content-between bg-dark text-white fw-bold fs-5">
+                    <span>Jami summa:</span>
+                    <span>{{ cart.get_total_price }} so'm</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
