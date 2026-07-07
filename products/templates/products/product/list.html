@@ -17,8 +17,10 @@
             {% endfor %}
         </div>
     </div>
-
     <div class="col-md-9">
+        {% if query %}
+        <h3 class="mb-4 text-muted">"{{ query }}" bo'yicha qidiruv natijalari:</h3>
+        {% endif %}
         <h2>{% if category %}{{ category.name }}{% else %}Barcha Mahsulotlar{% endif %}</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for product in products %}

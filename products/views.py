@@ -9,6 +9,10 @@ def product_list(request, category_slug=None):
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
 
+    query = request.GET.get('search')
+    if query:
+        products = products.filter(name__icontains=query)
+
     if category_slug:
 
         category = get_object_or_404(Category, slug = category_slug)
@@ -18,7 +22,8 @@ def product_list(request, category_slug=None):
     context = {
         'category': category,
         'categories': categories,
-        'products': products
+        'products': products,
+        'query': query
         }
 
     return render(request, 'products/product/list.html', context)
